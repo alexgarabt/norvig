@@ -4,31 +4,7 @@ A TypeScript implementation of Peter Norvig's probabilistic spelling corrector,
 based on his 2007 essay
 [How to Write a Spelling Corrector](https://norvig.com/spell-correct.html).
 
-## Historical context
-
-Automatic spelling correction has a long lineage. Fred Damerau, working at
-IBM's Thomas J. Watson Research Center, published
-[A Technique for Computer Detection and Correction of Spelling Errors](https://dl.acm.org/doi/10.1145/363958.363994)
-in 1964. In that paper he identified the four fundamental edit operations
-(insertion, deletion, substitution, transposition) and showed that they account
-for over 80% of all human misspellings. His method was deterministic: if a word
-was not in the dictionary, assume at most one error and search for a match.
-
-The key conceptual leap came in 1990, when Kernighan, Church and Gale at
-AT&T Bell Laboratories published
-[A Spelling Correction Program Based on a Noisy Channel Model](https://aclanthology.org/C90-2036/)
-(COLING 1990). They modeled the writer as a noisy channel: the writer knows what
-word they want to type, but noise is introduced on the way to the keyboard.
-Using Bayesian inference, the intended correction $c$ can be recovered from a
-typo $t$ by finding the $c$ that maximizes $P(c) \cdot P(t \mid c)$. They
-trained both probability distributions on Associated Press newswire data.
-
-In 2007, Peter Norvig (then Director of Research at Google) wrote his corrector
-on a transcontinental flight with no internet connection and no spelling error
-data. His contribution was not theoretical but pedagogical and engineering: he
-showed that the Bayesian framework of Kernighan et al. could be implemented in
-21 lines of Python with a radically simplified error model, achieving 68--75%
-accuracy on standard test sets.
+https://github.com/user-attachments/assets/b0a75920-c0ca-4f06-a350-d724828a6827
 
 ## Theory
 
@@ -154,16 +130,6 @@ known matches are stored.
 
 ## Implementation
 
-### Project structure
-
-```
-src/
-  types.ts      NorvigConfig and Candidate type definitions
-  utils.ts      counter() helper (like Python's collections.Counter)
-  norvig.ts     Main Norvig class
-  index.ts      Public API re-exports
-```
-
 ### `norvig.ts`
 
 The `Norvig` class loads a plain-text corpus, tokenizes it, and builds a
@@ -229,22 +195,3 @@ frequency lists from Wiktionary and the British National Corpus.
 4. **Alphabet-dependent.** Candidate generation scales with alphabet size. For
    languages with large character sets (e.g. Chinese with ~70,000 Han
    characters), the number of candidates at distance 1 becomes impractical.
-
-## References
-
-- Norvig, P. (2007). *How to Write a Spelling Corrector.*
-  [norvig.com/spell-correct.html](https://norvig.com/spell-correct.html)
-- Kernighan, M.D., Church, K.W. & Gale, W.A. (1990). *A Spelling Correction
-  Program Based on a Noisy Channel Model.* COLING 1990.
-  [aclanthology.org/C90-2036](https://aclanthology.org/C90-2036/)
-- Damerau, F.J. (1964). *A Technique for Computer Detection and Correction of
-  Spelling Errors.* Communications of the ACM, 7(3), 171--176.
-  [doi:10.1145/363958.363994](https://dl.acm.org/doi/10.1145/363958.363994)
-- Brill, E. & Moore, R.C. (2000). *An Improved Error Model for Noisy Channel
-  Spelling Correction.* ACL 2000.
-  [aclanthology.org/P00-1037](https://aclanthology.org/P00-1037/)
-- Jurafsky, D. & Martin, J.H. *Speech and Language Processing* (3rd ed. draft),
-  Appendix B: Spelling Correction and the Noisy Channel.
-  [web.stanford.edu/~jurafsky/slp3](https://web.stanford.edu/~jurafsky/slp3/old_dec21/B.pdf)
-- Garbe, W. (2012). *SymSpell: 1000x Faster Spelling Correction.*
-  [wolfgarbe.medium.com](https://wolfgarbe.medium.com/1000x-faster-spelling-correction-algorithm-2012-8701fcd87a5f)
